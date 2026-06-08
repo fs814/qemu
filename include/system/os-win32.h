@@ -78,7 +78,11 @@ void __attribute__((noreturn)) __mingw_longjmp(jmp_buf, int);
  * lets longjmp try a stack unwinding which will crash with generated code.
  */
 # undef setjmp
-# define setjmp(env) _setjmp(env, NULL)
+# if defined(__clang__) && defined(_MSC_VER)
+#  define setjmp(env) _setjmp(env)
+# else
+#  define setjmp(env) _setjmp(env, NULL)
+# endif
 #endif /* __aarch64__ */
 /* QEMU uses sigsetjmp()/siglongjmp() as the portable way to specify
  * "longjmp and don't touch the signal masks". Since we know that the
@@ -277,3 +281,4 @@ void qemu_win32_map_free(void *ptr, HANDLE h, Error **errp);
 #endif
 
 #endif
+

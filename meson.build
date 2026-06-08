@@ -374,7 +374,7 @@ elif host_os == 'haiku'
   qemu_common_flags += ['-DB_USE_POSITIVE_POSIX_ERRORS', '-D_BSD_SOURCE', '-fPIC']
 elif host_os == 'windows'
   # plugins use delaylib, and clang needs to be used with lld to make it work.
-  if compiler.get_id() == 'clang' and compiler.get_linker_id() != 'ld.lld'
+  if compiler.get_id() == 'clang' and compiler.get_linker_id() not in ['ld.lld', 'lld-link']
     error('On windows, you need to use lld with clang - use msys2 clang64/clangarm64 env')
   endif
 endif
@@ -5049,3 +5049,4 @@ if not actually_reloc and (host_os == 'windows' or get_option('relocatable'))
   message('QEMU will have to be installed under ' + get_option('prefix') + '.')
   message('Use --disable-relocatable to remove this warning.')
 endif
+

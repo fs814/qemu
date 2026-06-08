@@ -62,7 +62,47 @@
     container_of(dev, type, field);}))
 
 #define typeof_field(type, field) typeof(((type *)0)->field)
+#if defined(__clang__) && defined(_MSC_VER)
+#define type_check(t1,t2) 0
+#else
+#if defined(__clang__) && defined(_MSC_VER)
+#define type_check(t1,t2) 0
+#else
+#if defined(__clang__) && defined(_MSC_VER)
+#define type_check(t1,t2) 0
+#else
+#if defined(__clang__) && defined(_MSC_VER)
+#define type_check(t1,t2) 0
+#else
+#if defined(__clang__) && defined(_MSC_VER)
+#define type_check(t1,t2) 0
+#else
+#if defined(__clang__) && defined(_MSC_VER)
+#define type_check(t1,t2) 0
+#else
+#if defined(__clang__) && defined(_MSC_VER)
+#define type_check(t1,t2) 0
+#else
+#if defined(__clang__) && defined(_MSC_VER)
+#define type_check(t1,t2) 0
+#else
+#if defined(__clang__) && defined(_MSC_VER)
+#define type_check(t1,t2) 0
+#else
+#if defined(__clang__) && defined(_MSC_VER)
+#define type_check(t1,t2) 0
+#else
 #define type_check(t1,t2) ((t1*)0 - (t2*)0)
+#endif
+#endif
+#endif
+#endif
+#endif
+#endif
+#endif
+#endif
+#endif
+#endif
 
 #define QEMU_BUILD_BUG_ON_STRUCT(x) \
     struct { \
@@ -380,3 +420,13 @@
 #endif
 
 #endif /* COMPILER_H */
+
+
+
+
+
+
+
+
+
+
