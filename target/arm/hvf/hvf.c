@@ -1439,7 +1439,15 @@ int hvf_arch_init_vcpu(CPUState *cpu)
         }
 
         if (ri) {
-            assert(!(ri->type & ARM_CP_NO_RAW));
+            /*
+             * Workaround: on macOS 26 + Apple Silicon some hvf-listed sysregs
+             * land in qemu's cpregs table flagged ARM_CP_NO_RAW (e.g. cache
+             * maintenance instruction-as-register). Such regs have no raw
+             * state to migrate, so skip them instead of asserting.
+             */
+            if (ri->type & ARM_CP_NO_RAW) {
+                continue;
+            }
             arm_cpu->cpreg_indexes[sregs_cnt++] = kvm_id;
         }
     }
@@ -1452,7 +1460,9 @@ int hvf_arch_init_vcpu(CPUState *cpu)
                 const ARMCPRegInfo *ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
 
                 if (ri) {
-                    assert(!(ri->type & ARM_CP_NO_RAW));
+                    if (ri->type & ARM_CP_NO_RAW) {
+                        continue;
+                    }
                     arm_cpu->cpreg_indexes[sregs_cnt++] = kvm_id;
                 }
             }
